@@ -1,9 +1,4 @@
 module.exports = (mongoose) => {
-    const questionSchema = new mongoose.Schema({
-        name: String
-    });
-
-    const questionModel = mongoose.model('question', questionSchema);
 
     async function getQuestionList() {
         try {
@@ -23,13 +18,13 @@ module.exports = (mongoose) => {
         }
     }
 
-    async function createQuestion(text) {
-        let question = new questionModel({name: text});
+    async function createQuestion(t, d) {
+        let question = new questionModel({title: t, description: d});
         return question.save();
     }
 
     async function bootstrap(count = 10) {
-        let l = (await getQuestion()).length;
+        let l = (await getQuestionList()).length;
         console.log("Question collection size:", l);
 
         if (l === 0) {

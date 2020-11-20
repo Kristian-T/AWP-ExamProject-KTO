@@ -4,28 +4,29 @@ import {Link} from "@reach/router";
 import AddQuestion from "./AddQuestion";
 
 function QuestionList(props) {
-    let questionList = props.questionList;
-    const filter = props.filter;
+    const qList = props.qList;
 
-    console.log("filter", filter);
 
-    const mapFunction = element =>
-        <Link to={`/question/${element.id}`} key={element.id}>
-            <li>{element.title}</li>
-        </Link>;
+    const mapFunction = (element) => (
+        <Link className="QuestionLink" key={element.ID} to={`/question/${element.ID}`}>
+            <p className="QuestionTitle">{element.title}</p>
+            <p>Answers:</p>
+        </Link>
+);
 
-    const list = questionList.map(mapFunction);
+    let list;
+    if (qList !== undefined) {
+        list = qList.map(mapFunction);
+    }
+
 
     return (
-        <>
-            <h3>Questions</h3>
-            <ul>
-                {list}
-            </ul>
-
-            <AddQuestion addQuestion={props.addQuestion}></AddQuestion>
-        </>
-    );
+    <>
+        <p>Questions: </p>
+        <div className="RootDiv">{list}</div>
+       <AddQuestion addQuestion={props.addQuestion}></AddQuestion>
+    </>
+);
 }
 
 export default QuestionList;

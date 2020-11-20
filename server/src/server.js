@@ -10,17 +10,12 @@ const mongoose = require('mongoose');
 
 /**** Configuration ****/
 const app = express();
-const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost/questionList';
+const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost/QuestionDB';
+mongoose.connect(MONGO_URL, {useNewUrlParser: true, useUnifiedTopology: true});
 
-async function createServer() {
-  // Connect db
-  await mongoose.connect(MONGO_URL, {useNewUrlParser: true, useUnifiedTopology: true});
+function createServer() {
 
-  // Create data
-  const questionDB = require('./questionDB')(mongoose);
-  await questionDB.bootstrap();
-
-  const routes = require("./routes")(questionDB); // Inject mongoose into routes module
+  const routes = require("./routes")
 
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
@@ -29,7 +24,7 @@ async function createServer() {
   app.use(express.static(path.resolve('..', 'client', 'build')));
 
   /**** Add routes ****/
-  app.use("/api/questionList", routes);
+  app.use("/api/ql", routes);
 
   // "Redirect" all non-API GET requests to React's entry point (index.html)
   app.get('*', (req, res) =>
