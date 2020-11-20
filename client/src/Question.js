@@ -3,17 +3,14 @@ import Answer from './Answer';
 
 function Question(props) {
     const id = props.id;
-    const question = props.getQuestion(id);
+    const question = props.getQ(id);
 
     let answers = question.answers.map((element) => {
         return (
             <li key={element._id}>
                 <div>
-                    <h1>{element.answer}</h1>
-                    <p>Votes: {element.vote}</p>
-                    <button className="VoteBTN" onClick={(event) => props.voting(id, element._id)}>
-                        +
-                    </button>
+                    <h1>{element.description}</h1>
+                    <p>Votes: {element.votes}</p>
                 </div>
             </li>
         );
@@ -24,10 +21,10 @@ function Question(props) {
             <h1>{question.title}</h1>
             <p>{question.description}</p>
             <h1>Answers</h1>
-            {<ul>{answers}</ul>}
+            {<ul>{}</ul>}
             <Answer
                 id={question.ID}
-                posting={props.posting}
+                answer={props.answ}
             ></Answer>
         </>
     );

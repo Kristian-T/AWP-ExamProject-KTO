@@ -29,6 +29,7 @@ exports.postQuestion = (req, res) => {
         id: new mongoose.Types.ObjectId(),
         title: req.body.title,
         description: req.body.description,
+        answers: req.body.answers
     });
     return Post.save()
         .then((result) => {
@@ -71,8 +72,8 @@ exports.postAnswer = (req, res) => {
 
 exports.getQuestionByID = (req, res) => {
     const id = req.params.question_id;
-    questionSchema.findOne({ _id: id })
-        .select("ID title content date answersCount answers")
+    questionSchema.findOne({ id: id })
+        .select("ID title description answers")
         .exec()
         .then((doc) => {
             if (doc) {

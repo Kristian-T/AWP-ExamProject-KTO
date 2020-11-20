@@ -18,15 +18,16 @@ function App() {
             setQuestion(data.Post);
         }
         fetchData();
-    }, []);
+    }, [answers]);
 
     function getQuestion(id) {
         let q = questionList.find((element) => element.id == id);
+        console.log("Questions______________________________________________________________:"+questionList)
         return q;
     }
 
     async function answer(answer, qId){
-        const url = `${API_URL}/questions/answer/${qId}`;
+        const url = `${API_URL}/ql/answer/${qId}`;
         const newQuestion = {
             answer: answer
         }
@@ -68,11 +69,11 @@ function App() {
 
                 <Router>
                     <QuestionList path="/" qList={questionList} addQuestion={addQuestion}/>
-                    <Question path="/question/:id" getQuestion={getQuestion} answ={answer}/>
+                    <Question path="/question/:id" getQ={getQuestion} answ={answer}/>
                 </Router>
             </>
     );
-    console.log("Questions______________________________________________________________:"+questionList)
+
 }
 
 export default App;

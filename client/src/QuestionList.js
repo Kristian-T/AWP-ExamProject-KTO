@@ -8,9 +8,8 @@ function QuestionList(props) {
 
 
     const mapFunction = (element) => (
-        <Link className="QuestionLink" key={element.ID} to={`/question/${element.ID}`}>
-            <p className="QuestionTitle">{element.title}</p>
-            <p>Answers:</p>
+        <Link key={element.ID} to={`/question/${element.ID}`}>
+            <p>{element.title}</p>
         </Link>
 );
 
