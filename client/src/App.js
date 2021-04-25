@@ -9,6 +9,7 @@ const API_URL = process.env.REACT_APP_API;
 function App() {
     const [questionList, setQuestion] = useState([]);
     const [answers, setAnswer] = useState([]);
+    const [voteCount, setVoteCount] = useState([])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -18,16 +19,39 @@ function App() {
             setQuestion(data.Post);
         }
         fetchData();
-    }, [answers]);
+    }, [answers, voteCount]);
 
     function getQuestion(id) {
-        let q = questionList.find((element) => element.id == id);
-        console.log("Questions______________________________________________________________:"+questionList)
-        return q;
+        if (questionList) {
+            let localQuestionList = questionList;
+            let q = localQuestionList.find((element) => element.ID == id);
+            return q;
+        }
     }
 
-    async function answer(answer, qId){
-        const url = `${API_URL}/ql/answer/${qId}`;
+    async function voteOnAnswer(question_id, answer_id){
+
+        const url = `${API_URL}/questions/vote/${question_id}`;
+
+        const targetAnswer = {
+            ID: answer_id
+        }
+
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(targetAnswer),
+        });
+        const data = await response.json();
+
+        setVoteCount([...voteCount,data])
+
+    }
+
+    async function answer(answer, questionId){
+        const url = `${API_URL}/ql/answer/${questionId}`;
         const newQuestion = {
             answer: answer
         }
@@ -43,19 +67,20 @@ function App() {
         setAnswer([...answers, data])
     }
 
-    async function addQuestion(title, description) {
+    async function addNewQuestion(title, description) {
         console.log(title, description);
         const url = `${API_URL}/ql`;
 
         const newQuestion = {
             title: title,
             description: description,
-        }
+            answers: [],
+        };
 
         const response = await fetch(url, {
-            method: 'POST', // or 'PUT'
+            method: "POST", // or 'PUT'
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "application/json",
             },
             body: JSON.stringify(newQuestion),
         });
@@ -68,8 +93,8 @@ function App() {
                 <h1>Question App</h1>
 
                 <Router>
-                    <QuestionList path="/" qList={questionList} addQuestion={addQuestion}/>
-                    <Question path="/question/:id" getQ={getQuestion} answ={answer}/>
+                    <QuestionList path="/" qList={questionList} addQuestion={addNewQuestion}></QuestionList>
+                    <Question path="/question/:id" getQ={getQuestion} answer={answer} vote={voteOnAnswer}></Question>
                 </Router>
             </>
     );

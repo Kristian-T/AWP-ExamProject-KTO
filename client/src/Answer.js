@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 
 function Answer(props) {
-    const [answer, setAnswer] = useState("");
-
+    const [answers, setAnswer] = useState("");
     return <>
-        <input onChange={(event) => setAnswer(event.target.value)} type="text" placeholder="Question" />
-        <button type="button" onClick={(event) => props.posting(answer, props.id)}>Post</button>
+        <input onChange={(event) => setAnswer(event.target.value)} type="text" placeholder="Answer" />
+        <button type="button" onClick={(event) => props.answer(answers, props.id)}>Post</button>
     </>
 }
 

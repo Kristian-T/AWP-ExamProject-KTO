@@ -5,29 +5,32 @@ function Question(props) {
     const id = props.id;
     const question = props.getQ(id);
 
-    let answers = question.answers.map((element) => {
-        return (
-            <li key={element._id}>
-                <div>
-                    <h1>{element.description}</h1>
-                    <p>Votes: {element.votes}</p>
-                </div>
-            </li>
-        );
-    });
+        let answers = question.answers.map((element) => {
+            return (
+                <li key={element._id}>
+                    <div>
+                        <h2>{element.answer}</h2>
+                        <p>Votes: {element.vote}</p>
+                        <button onClick={(event) => props.votes(id, element._id)}>Vote</button>
+                    </div>
+                </li>
+            );
+        });
 
-    return (
-        <>
-            <h1>{question.title}</h1>
-            <p>{question.description}</p>
-            <h1>Answers</h1>
-            {<ul>{}</ul>}
-            <Answer
-                id={question.ID}
-                answer={props.answ}
-            ></Answer>
-        </>
-    );
+        return (
+            <>
+                <div>
+                    <h1>{question.title}</h1>
+                    <p>{question.description}</p>
+                    <h1>Answers</h1>
+                    {<ul>{answers}</ul>}
+                </div>
+                <Answer
+                    id={question.ID}
+                    answer={props.answer}
+                ></Answer>
+            </>
+        );
 }
 
 export default Question;

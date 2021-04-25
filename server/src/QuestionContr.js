@@ -12,6 +12,7 @@ exports.getQuestions = (req, res) => {
                         ID: doc.id,
                         title: doc.title,
                         description: doc.description,
+                        answers: doc.answers,
                     };
                 }),
             };
@@ -25,6 +26,7 @@ exports.getQuestions = (req, res) => {
 };
 
 exports.postQuestion = (req, res) => {
+    console.log("POSTING: " + req.body)
     const Post = new questionSchema({
         id: new mongoose.Types.ObjectId(),
         title: req.body.title,
@@ -54,10 +56,10 @@ exports.postAnswer = (req, res) => {
         .then((doc) => {
             let newAnswer = {
                 answer: req.body.answer,
-                answerDate: Date.now(),
                 vote: 0,
             };
             doc.answers.push(newAnswer);
+            doc.answersCount += 1;
             return doc
                 .save()
                 .then((result) => {
@@ -70,10 +72,32 @@ exports.postAnswer = (req, res) => {
 
 };
 
+exports.answerVote = (req, res) => {
+    const id = req.params.question_id;
+    questionSchema.findOne({ id: id })
+        .exec()
+        .then((doc) => {
+            let targetAnswer = doc.answers.find((elem) => elem._id == req.body.ID);
+            let indexOfTargetAnswer = doc.answers.indexOf(targetAnswer);
+            targetAnswer.votes += 1;
+
+            doc.answers.splice(indexOfTargetAnswer, 1);
+            doc.answers.splice(indexOfTargetAnswer, 0, targetAnswer);
+
+            doc
+                .save()
+                .then((result) => {
+                    res.status(201).json({
+                        message: "Votes updated",
+                    });
+                })
+        })
+};
+
 exports.getQuestionByID = (req, res) => {
     const id = req.params.question_id;
     questionSchema.findOne({ id: id })
-        .select("ID title description answers")
+        .select("ID title description answer")
         .exec()
         .then((doc) => {
             if (doc) {
