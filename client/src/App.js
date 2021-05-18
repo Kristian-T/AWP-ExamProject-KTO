@@ -17,7 +17,7 @@ function App() {
             const response = await fetch(url);
             const data = await response.json();
             setQuestion(data.Post);
-        }
+        };
         fetchData();
     }, [answers, voteCount]);
 

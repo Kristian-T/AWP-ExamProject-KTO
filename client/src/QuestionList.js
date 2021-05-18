@@ -21,7 +21,7 @@ function QuestionList(props) {
 
     return (
     <>
-        <p>Questions: </p>
+        <p>Questionsss: </p>
         <div className="RootDiv">{list}</div>
        <AddQuestion addQuestion={props.addQuestion}></AddQuestion>
     </>
