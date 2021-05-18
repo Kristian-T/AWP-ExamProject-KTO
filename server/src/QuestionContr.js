@@ -56,7 +56,7 @@ exports.postAnswer = (req, res) => {
         .then((doc) => {
             let newAnswer = {
                 answer: req.body.answer,
-                vote: 0,
+                votes: 0,
             };
             doc.answers.push(newAnswer);
             doc.answersCount += 1;

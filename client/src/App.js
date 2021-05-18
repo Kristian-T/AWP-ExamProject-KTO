@@ -31,8 +31,7 @@ function App() {
 
     async function voteOnAnswer(question_id, answer_id){
 
-        const url = `${API_URL}/questions/vote/${question_id}`;
-
+        const url = `${API_URL}/ql/vote/${question_id}`;
         const targetAnswer = {
             ID: answer_id
         }
@@ -94,7 +93,7 @@ function App() {
 
                 <Router>
                     <QuestionList path="/" qList={questionList} addQuestion={addNewQuestion}></QuestionList>
-                    <Question path="/question/:id" getQ={getQuestion} answer={answer} vote={voteOnAnswer}></Question>
+                    <Question path="/question/:id" getQ={getQuestion} answer={answer} voteq={voteOnAnswer}></Question>
                 </Router>
             </>
     );

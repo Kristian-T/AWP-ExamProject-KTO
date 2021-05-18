@@ -11,7 +11,6 @@ const mongoose = require('mongoose');
 /**** Configuration ****/
 const app = express();
 const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost/QuestionDB';
-//const MONGO_URL = process.env.MONGO_URL || 'mongodb+srv://KToft:Sjuskeren1@cluster0.ywrdc.mongodb.net/QuestionDB?retryWrites=true&w=majority';
 mongoose.connect(MONGO_URL, {useNewUrlParser: true, useUnifiedTopology: true});
 
 function createServer() {

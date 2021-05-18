@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Answer from './Answer';
 
 function Question(props) {
@@ -10,8 +10,8 @@ function Question(props) {
                 <li key={element._id}>
                     <div>
                         <h2>{element.answer}</h2>
-                        <p>Votes: {element.vote}</p>
-                        <button onClick={(event) => props.votes(id, element._id)}>Vote</button>
+                        <p>Votes: {element.votes}</p>
+                        <button onClick={(event) => props.voteq(id, element._id)}>Vote</button>
                     </div>
                 </li>
             );
