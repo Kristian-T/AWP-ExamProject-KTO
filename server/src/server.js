@@ -11,7 +11,7 @@ const mongoose = require('mongoose');
 /**** Configuration ****/
 const app = express();
 //const MONGO_URL = process.env.MONGO_URL || 'mongodb+srv://<username>:<password>@cluster0.ywrdc.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
-const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost/QuestionDB';
+const MONGO_URL = process.env.MONGO_URL || 'mongodb://localhost/DiscusDB';
 mongoose.connect(MONGO_URL, {useNewUrlParser: true, useUnifiedTopology: true});
 
 function createServer() {
@@ -25,7 +25,7 @@ function createServer() {
   app.use(express.static(path.resolve('..', 'client', 'build')));
 
   /**** Add routes ****/
-  app.use("/api/ql", routes);
+  app.use("/api/disclist", routes);
 
   // "Redirect" all non-API GET requests to React's entry point (index.html)
   app.get('*', (req, res) =>
